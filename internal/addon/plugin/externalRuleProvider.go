@@ -4,6 +4,7 @@ import (
 	"github.com/yoheimuta/protolint/internal/addon/plugin/proto"
 	"github.com/yoheimuta/protolint/internal/addon/plugin/shared"
 
+	"github.com/yoheimuta/protolint/linter/autodisable"
 	"github.com/yoheimuta/protolint/linter/rule"
 )
 
@@ -12,6 +13,7 @@ func GetExternalRules(
 	clients []shared.RuleSet,
 	fixMode bool,
 	verbose bool,
+	autoDisableType autodisable.PlacementType,
 ) ([]rule.Rule, error) {
 	var rs []rule.Rule
 
@@ -26,7 +28,7 @@ func GetExternalRules(
 
 		for _, r := range resp.Rules {
 			severity := getSeverity(r.Severity)
-			rs = append(rs, newExternalRule(r.Id, r.Purpose, client, severity))
+			rs = append(rs, newExternalRule(r.Id, r.Purpose, client, severity, autoDisableType))
 		}
 	}
 	return rs, nil

@@ -11,6 +11,7 @@ import (
 type RuleGen func(
 	verbose bool,
 	fixMode bool,
+	autodisable string,
 ) rule.Rule
 
 // ID implements rule.Rule.

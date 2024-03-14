@@ -30,6 +30,7 @@ func (c *ruleSet) initialize(req *proto.ListRulesRequest) {
 			r = f(
 				req.Verbose,
 				req.FixMode,
+				req.AutoDisableType,
 			)
 		}
 		ruleMap[r.ID()] = r

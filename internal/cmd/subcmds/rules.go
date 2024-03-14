@@ -19,7 +19,7 @@ func NewAllRules(
 ) (internalrule.Rules, error) {
 	rs := newAllInternalRules(option, fixMode, autoDisableType)
 
-	es, err := plugin.GetExternalRules(plugins, fixMode, verbose)
+	es, err := plugin.GetExternalRules(plugins, fixMode, verbose, autoDisableType)
 	if err != nil {
 		return nil, err
 	}

@@ -4,27 +4,34 @@ import (
 	"github.com/yoheimuta/go-protoparser/v4/parser"
 	"github.com/yoheimuta/go-protoparser/v4/parser/meta"
 
+	"github.com/yoheimuta/protolint/linter/autodisable"
 	"github.com/yoheimuta/protolint/linter/report"
 	"github.com/yoheimuta/protolint/linter/rule"
 )
 
 // SimpleRule verifies that all enum names are LowerSnakeCase.
 type SimpleRule struct {
-	verbose  bool
-	fixMode  bool
-	severity rule.Severity
+	verbose         bool
+	fixMode         bool
+	autoDisableType autodisable.PlacementType
+	severity        rule.Severity
 }
 
 // NewSimpleRule creates a new SimpleRule.
 func NewSimpleRule(
 	verbose bool,
 	fixMode bool,
+	autoDisableType autodisable.PlacementType,
 	severity rule.Severity,
 ) SimpleRule {
+	if autoDisableType != autodisable.Noop {
+		fixMode = false
+	}
 	return SimpleRule{
-		verbose:  verbose,
-		fixMode:  fixMode,
-		severity: severity,
+		verbose:         verbose,
+		fixMode:         fixMode,
+		autoDisableType: autoDisableType,
+		severity:        severity,
 	}
 }
 
@@ -51,6 +58,6 @@ func (r SimpleRule) Severity() rule.Severity {
 // Apply applies the rule to the proto.
 func (r SimpleRule) Apply(proto *parser.Proto) ([]report.Failure, error) {
 	return []report.Failure{
-		report.Failuref(meta.Position{}, r.ID(), "Custom Rule, verbose=%v, fixMode=%v", r.verbose, r.fixMode),
+		report.Failuref(meta.Position{}, r.ID(), "Custom Rule, verbose=%v, fixMode=%v, autoDisableType", r.verbose, r.fixMode, r.autoDisableType),
 	}, nil
 }

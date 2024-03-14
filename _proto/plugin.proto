@@ -1,12 +1,18 @@
 syntax = "proto3";
 package proto;
 
-option go_package = 
+option go_package =
   "github.com/yoheimuta/protolint/internal/addon/plugin/proto";
 
 service RuleSetService {
   rpc ListRules(ListRulesRequest) returns (ListRulesResponse);
   rpc Apply(ApplyRequest) returns (ApplyResponse);
+}
+
+enum AutoDisablePlacement {
+  AUTO_DISABLE_PLACEMENT_UNSPECIFIED = 0;
+  AUTO_DISABLE_PLACEMENT_NEXT = 1;
+  AUTO_DISABLE_PLACEMENT_THIS = 2;
 }
 
 enum RuleSeverity {
@@ -26,6 +32,7 @@ message ListRulesResponse {
     string id = 1;
     string purpose = 2;
     RuleSeverity severity = 3;
+    AutoDisablePlacement auto_disable = 4;
   }
   repeated Rule rules = 1;
 }

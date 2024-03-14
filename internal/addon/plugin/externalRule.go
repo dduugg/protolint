@@ -9,16 +9,18 @@ import (
 	"github.com/yoheimuta/go-protoparser/v4/parser/meta"
 
 	"github.com/yoheimuta/protolint/internal/addon/plugin/proto"
+	"github.com/yoheimuta/protolint/linter/autodisable"
 	"github.com/yoheimuta/protolint/linter/report"
 	"github.com/yoheimuta/protolint/linter/rule"
 )
 
 // externalRule represents a customized rule that works as a plugin.
 type externalRule struct {
-	id       string
-	purpose  string
-	client   shared.RuleSet
-	severity rule.Severity
+	id              string
+	purpose         string
+	client          shared.RuleSet
+	severity        rule.Severity
+	autoDisableType autodisable.PlacementType
 }
 
 func newExternalRule(
@@ -26,12 +28,14 @@ func newExternalRule(
 	purpose string,
 	client shared.RuleSet,
 	severity rule.Severity,
+	autoDisableType autodisable.PlacementType,
 ) externalRule {
 	return externalRule{
-		id:       id,
-		purpose:  purpose,
-		client:   client,
-		severity: severity,
+		id:              id,
+		purpose:         purpose,
+		client:          client,
+		severity:        severity,
+		autoDisableType: autoDisableType,
 	}
 }
 

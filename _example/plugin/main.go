@@ -27,8 +27,9 @@ func main() {
 		plugin.RuleGen(func(
 			verbose bool,
 			fixMode bool,
+			autodisableType string,
 		) rule.Rule {
-			return customrules.NewSimpleRule(verbose, fixMode, rule.SeverityError)
+			return customrules.NewSimpleRule(verbose, fixMode, autodisableType, rule.SeverityError)
 		}),
 	)
 }
